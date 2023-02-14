@@ -27,7 +27,7 @@ public class Data {
 		return this.clientsList.add(client);
 	}
 	
-	public Client removeData(int id) {
-		return this.clientsList.remove(id);
+	public boolean removeData(int id) {
+		return this.clientsList.removeIf(client -> client.getId() == id);
 	}
 }

@@ -19,6 +19,18 @@ public class Client {
 		this.city = city;
 	}
 	
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (obj == this) {
+//			return true;
+//		}
+//		if (!(obj instanceof Client)) {
+//			return false;
+//		}
+//		Client client = (Client) obj;
+//		return Integer.compare(this.id, client.id) == 0;
+//	}
+
 	@Override
 	public String toString() {
 		return "Client n°" + id + " : " + name + ", N° Siret : " + siret + ", Adresse : " + address + ", " + postcode

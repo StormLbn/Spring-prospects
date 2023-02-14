@@ -22,8 +22,8 @@ public class AppControl {
 	
 	public void showMenu() {
 		System.out.println("\n=== MENU PRINCIPAL ===");
-		System.out.println("1- Voir les clients");
-		System.out.println("2- Ajouter un client");
+		System.out.println("1- Ajouter un client");
+		System.out.println("2- Modifier un client");
 		System.out.println("3- Retirer un client");
 		System.out.println("0- Quitter");
 	}
@@ -31,6 +31,7 @@ public class AppControl {
 	public void choiceMenu() {
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
+			disp.dispayClientsList(services.getData());
 			showMenu();
 			System.out.println("Votre choix :");
 			String choice = scanner.nextLine();
@@ -42,19 +43,20 @@ public class AppControl {
 
 		switch (choice) {
 		case "1":
-			disp.dispayClientsList(services.getData());
-			break;
-		case "2":
 			if (services.addClient()) {
 				System.out.println("Client ajouté");
 			} else {
 				System.out.println("Erreur");
 			}
 			break;
+		case "2":
+			services.editClient();
+			break;
 		case "3":
-			Client client = services.removeClient();
-			if (client != null) {
-				System.out.println("Suppression du client n°" + client.getId() + " (" + client.getName() + ")");
+			if (services.removeClient()) {
+				System.out.println("Client supprimé");
+			} else {
+				System.out.println("Erreur");
 			}
 			break;
 		case "0":

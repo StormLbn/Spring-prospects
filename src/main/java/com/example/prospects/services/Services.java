@@ -17,7 +17,35 @@ public class Services {
 	public ArrayList<Client> getData() {
 		return data.getData();
 	}
-	
+
+	public void editClient() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("ID du client à modifier :");
+		String input = scanner.nextLine();
+		ArrayList<Client> clientsList = data.getData();
+
+		try {
+			int id = Integer.parseInt(input);
+			for (Client client : clientsList) {
+				if (id == (client.getId())) {
+					System.out.println("Nom du client :");
+					client.setName(scanner.nextLine());
+					System.out.println("N° Siret :");
+					client.setSiret(scanner.nextLine());
+					System.out.println("Adresse :");
+					client.setAddress(scanner.nextLine());
+					System.out.println("Code postal :");
+					client.setPostcode(scanner.nextLine());
+					System.out.println("Ville :");
+					client.setCity(scanner.nextLine());
+				}
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Merci d'entrer un ID valide");
+		}
+	}
+
 	public boolean addClient() {
 		Client client = new Client();
 		Scanner scanner = new Scanner(System.in);
@@ -34,14 +62,14 @@ public class Services {
 		return data.addData(client);
 	}
 	
-	public Client removeClient() {
+	public boolean removeClient() {
 		while (true) {
 			Scanner scanner = new Scanner(System.in);
 			System.out.println("ID du client à supprimer :");
 			String input = scanner.nextLine();
 			try {
 				int id = Integer.parseInt(input);
-				return data.removeData(id - 1);
+				return data.removeData(id);
 			} catch (Exception e) {
 				System.out.println("Merci d'entrer un ID valide");
 			}
