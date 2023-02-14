@@ -12,9 +12,9 @@ public class Data {
 
 	public ArrayList<Client> generateData() {
 		ArrayList<Client> clients = new ArrayList<Client>();
-		clients.add(new Client(clients.size() + 1,"Bob", "12356", "123 rue Bidon", "99999", "Fakeville"));
-		clients.add(new Client(clients.size() + 1,"Albert", "12356", "123 rue Bidon", "99999", "Fakeville"));
-		clients.add(new Client(clients.size() + 1,"Micheline", "12356", "123 rue Bidon", "99999", "Fakeville"));
+		clients.add(new Client(1,"Bob", "12356", "123 rue Bidon", "99999", "Fakeville"));
+		clients.add(new Client(2,"Albert", "12356", "123 rue Bidon", "99999", "Fakeville"));
+		clients.add(new Client(3,"Micheline", "12356", "123 rue Bidon", "99999", "Fakeville"));
 		return clients;
 	}
 	
