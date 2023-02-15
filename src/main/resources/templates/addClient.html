@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+            <meta charset="UTF-8" />
+            <title>Prospects - Ajouter un client</title>
+            <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    </head>
+    <body>
+        <form th:action = "@{/addClient}" th:object = "${clientForm}" method = "POST">
+            <label for="name">Nom du client :</label>
+            <input type="text" th:field="*{name}" />
+
+            <label for="siret">Siret :</label>
+            <input type="text" th:field="*{siret}"/>
+
+            <label for="address">Adresse :</label>
+            <input type="text" th:field="*{address}"/>
+
+            <label for="postcode">Code postal :</label>
+            <input type="text" th:field="*{postcode}" />
+
+            <label for="city">Ville :</label>
+            <input type="text" th:field="*{city}" />
+
+            <input type="submit" value="Ajouter client" />
+        </form>
+        <div th:if="${errorMessage}" th:utext="${errorMessage}" style="color:red;font-style:italic;">
+        </div>
+    </body>
+</html>
