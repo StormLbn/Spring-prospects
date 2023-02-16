@@ -1,78 +1,48 @@
 package com.example.prospects.services;
-
-import java.util.ArrayList;
-import java.util.Scanner;
+//
+//import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Service;
+//
 import com.example.prospects.model.Client;
-import com.example.prospects.repository.Data;
+import com.example.prospects.repository.ClientsRepo;
 
-@Component
+@Service
 public class Services {
+
 	@Autowired
-	private Data data;
+	private ClientsRepo cr;
 	
-	public ArrayList<Client> getData() {
-		return data.getData();
-	}
-
-	public void editClient() {
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("ID du client à modifier :");
-		String input = scanner.nextLine();
-		ArrayList<Client> clientsList = data.getData();
-
-		try {
-			int id = Integer.parseInt(input);
-			for (Client client : clientsList) {
-				if (id == (client.getId())) {
-					System.out.println("Nom du client :");
-					client.setName(scanner.nextLine());
-					System.out.println("N° Siret :");
-					client.setSiret(scanner.nextLine());
-					System.out.println("Adresse :");
-					client.setAddress(scanner.nextLine());
-					System.out.println("Code postal :");
-					client.setPostcode(scanner.nextLine());
-					System.out.println("Ville :");
-					client.setCity(scanner.nextLine());
-				}
-			}
-			
-		} catch (Exception e) {
-			System.out.println("Merci d'entrer un ID valide");
-		}
-	}
-
-	public boolean addClient() {
-		Client client = new Client();
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Nom du client :");
-		client.setName(scanner.nextLine());
-		System.out.println("N° Siret :");
-		client.setSiret(scanner.nextLine());
-		System.out.println("Adresse :");
-		client.setAddress(scanner.nextLine());
-		System.out.println("Code postal :");
-		client.setPostcode(scanner.nextLine());
-		System.out.println("Ville :");
-		client.setCity(scanner.nextLine());
-		return data.addData(client);
+	public List<Client> getAllClients() {
+		return cr.findAll();
 	}
 	
-	public boolean removeClient() {
-		while (true) {
-			Scanner scanner = new Scanner(System.in);
-			System.out.println("ID du client à supprimer :");
-			String input = scanner.nextLine();
-			try {
-				int id = Integer.parseInt(input);
-				return data.removeData(id);
-			} catch (Exception e) {
-				System.out.println("Merci d'entrer un ID valide");
-			}
-		}
+	public Client addClient(Client client) {
+		return cr.save(client);
 	}
+
+	public void deleteClientById(int id) {
+		this.cr.deleteById(id);
+	}
+	
+	public void saveClient(Client client) {
+		this.cr.save(client);
+	}
+
+	public Client getClientById(int id) {
+		
+        Optional < Client > optional = cr.findById(id);
+        Client client = null;
+        if (optional.isPresent()) {
+            client = optional.get();
+        } else {
+            throw new RuntimeException(" Le client n° :: " + id + " n'a pas été trouvé");
+        }
+        return client;
+	}
+	
 }
+

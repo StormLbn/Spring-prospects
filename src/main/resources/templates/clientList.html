@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Person List</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+   </head>
+   <body>
+      <h1>Liste des Clients</h1>
+      <a href="addClient">Ajouter un client</a>
+      <br/><br/>
+      <div>
+         <table border="1">
+            <tr>
+               <th>Nom</th>
+               <th>Numéro de Siret</th>
+               <th>Adresse</th>
+               <th>Code Postal</th>
+               <th>Ville</th>
+            </tr>
+            <tr th:each ="client : ${clients}">
+               <td th:utext="${client.name}">...</td>
+               <td th:utext="${client.siret}">...</td>
+               <td th:utext="${client.address}">...</td>
+               <td th:utext="${client.postcode}">...</td>
+               <td th:utext="${client.city}">...</td>
+               <td><a th:href="@{/deleteClient/{id}(id=${client.id})}" class="btn btn-danger">Supprimer le client</a></td>
+               <td><a th:href="@{/formUpdateClient/{id}(id=${client.id})}" class="btn btn-primary">Modifier</a></td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

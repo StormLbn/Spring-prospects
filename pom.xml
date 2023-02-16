@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.0.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>prospects</artifactId>
@@ -14,20 +14,29 @@
 	<name>prospects</name>
 	<description>First Spring Boot project</description>
 	<properties>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+		<!-- Thymeleaf -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- Ajout des dépendances pour MySQL -->
+		<!-- Ajout des dépendances pour MySQL  -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -37,7 +46,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -46,5 +54,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

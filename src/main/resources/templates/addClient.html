@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Add Person</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+	<div class="container">
+		<h1>Ajouter un client :</h1>
+
+		<!--  
+	         In Thymeleaf the equivalent of
+	         JSP's ${pageContext.request.contextPath}/edit.html
+	         would be @{/edit.html}         
+	         -->
+
+		<form th:action="@{/addClient}" th:object="${clientForm}" method="POST">
+			Nom :
+			<input type="text" th:field="*{name}" />
+			<br />
+			Numéro de Siret :
+			<input type="text" th:field="*{siret}" />
+			<br />
+			Adresse :
+			<input type="text" th:field="*{address}" />
+			<br />
+			Code Postal :
+			<input type="text" th:field="*{postcode}" />
+			<br />
+			Ville :
+			<input type="text" th:field="*{city}" />
+			<br />
+			<input type="submit" value="Ajouter le client" />
+		</form>
+		<a th:href="@{/}">Retour</a>
+		<br />
+		<div th:if="${errorMessage}" th:utext="${errorMessage}" style="color:red;font-style:italic;">
+			...
+		</div>
+	</div>
+</body>
+
+</html>
