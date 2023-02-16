@@ -1,25 +1,17 @@
 package com.example.prospects.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-//import java.util.Scanner;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.example.prospects.form.ClientForm;
 import com.example.prospects.model.Client;
 import com.example.prospects.services.Services;
-import com.example.prospects.vue.Display;
-
-//// Déclaration de la classe comme étant un bean
-//@Component
 
 // Déclaration de la classe comme étant un controlleur
 @Controller
@@ -28,106 +20,74 @@ public class AppControl {
 	// Injection des dépendances via les beans
 	@Autowired
 	private Services services;
-//	@Autowired
-//	private Display disp;
 	
-	// Injections via application.properties
+	// Injections de variables via application.properties
 	@Value("${error.message}")
 	private String errorMessage;
 	
+	// Fonction de mapping : lie un fichier .html à un ou plusieurs chemins, indiqués dans le paramètre value
 	@RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
 	public String index(Model model) {
+		// On retourne le nom du fichier .html à utiliser
 		return "index";
 	}
 	
-	@RequestMapping(value = {"/clientList"}, method = RequestMethod.GET)
+	// Affichage de la liste des clients ; autre syntaxe pour un mapping en GET
+	@GetMapping("/clientList")
 	public String clientList(Model model) {
-		// Injection des données dans la page HTML
+		// Injection des données dans la page HTML : on crée une variable "clients" dans le HTML, dans laquelle on place les données renvoyées par le service
 		model.addAttribute("clients", services.getData());
-		
 		return "clientList";
 	}
 
+	// Affichage du formulaire pour ajouter un client
 	@RequestMapping(value = {"/addClient"}, method = RequestMethod.GET)
 	public String showAddClientPage(Model model) {
 		
-		// Création d'un objet formulaire et injection dans la page HTML
-		ClientForm clientForm = new ClientForm();
+		// Création d'un objet client vide et injection dans la page HTML pour qu'il puisse être utilisé dans le formulaire
+		Client clientForm = new Client();
 		model.addAttribute("clientForm", clientForm);
 		
-		return "addClient";
-	}
-	
-	@RequestMapping(value = {"/addClient"}, method = RequestMethod.POST)
-	public String saveClient(Model model, //
-			@ModelAttribute("clientForm") ClientForm clientForm) {
-		
-		Client client = new Client();
-		client.setName(clientForm.getName());
-		client.setSiret(clientForm.getSiret());
-		client.setAddress(clientForm.getAddress());
-		client.setPostcode(clientForm.getPostcode());
-		client.setCity(clientForm.getCity());
-		
-		if (client.getName().length() > 0 && client.getSiret().length() > 0 && client.getAddress().length() > 0 && client.getPostcode().length() > 0 && client.getCity().length() > 0) {
-//			clients.add(client);
-			if (services.addClient(client) != null) {
-				return "redirect:/clientList";
-			}
-		}
-		
-		model.addAttribute("errorMessage", errorMessage);
-		return "addClient";
+		return "clientForm";
 	}
 
-//	public void run() {
-//		choiceMenu();
-//	}
-//	
-//	public void showMenu() {
-//		System.out.println("\n=== MENU PRINCIPAL ===");
-//		System.out.println("1- Ajouter un client");
-//		System.out.println("2- Modifier un client");
-//		System.out.println("3- Retirer un client");
-//		System.out.println("0- Quitter");
-//	}
-//	
-//	public void choiceMenu() {
-//		Scanner scanner = new Scanner(System.in);
-//		while (true) {
-//			disp.dispayClientsList(services.getData());
-//			showMenu();
-//			System.out.println("Votre choix :");
-//			String choice = scanner.nextLine();
-//			getChoice(choice);
-//		}
-//	}
-//
-//	public void getChoice(String choice) {
-//
-//		switch (choice) {
-//		case "1":
-//			if (services.addC> 0 != null) {
-//				System.out.println("Client ajouté");
-//			} else {
-//				System.out.println("Erreur");
-//			}
-//			break;
-//		case "2":
-//			services.editClient();
-//			break;
-//		case "3":
-//			if (services.removeClient()) {
-//				System.out.println("Client supprimé");
-//			} else {
-//				System.out.println("Erreur");
-//			}
-//			break;
-//		case "0":
-//			System.out.println("Au revoir !");
-//			System.exit(0);
-//		default:
-//			System.out.println("Erreur de saisie, réessayez !");
-//		}
-//	}
+	// Affichage du formulaire pré-rempli pour modifier un client
+	@RequestMapping(value = {"/updateClient/{id}"}, method = RequestMethod.GET)
+	public String showUpdateClientPage(Model model, @PathVariable(value = "id") int id) {
+
+		// On va chercher le client à modifier dans la base de données
+		Client client = services.getClientById(id);
+		// On injecte le client dans la page HTML pour qu'il soit affiché dans le formulaire
+		model.addAttribute("clientForm", client);
+		
+		// On utilise le même fichier .html que pour la création d'un client (DRY)
+		return "clientForm";
+	}
+	
+	// Sauvegarde d'un client (nouveau ou modifier) ; mapping en POST : définit une action à effectuer
+	@RequestMapping(value = {"/saveClient"}, method = RequestMethod.POST)
+	public String saveClient(Model model, //
+			// On définit l'objet avec lequel on a créé le formulaire et qui servira à récupérer les données
+			@ModelAttribute("clientForm") Client client) {
+		
+		// On vérifie que tous les champs ont été remplis
+		if (client.getName().length() > 0 && client.getSiret().length() > 0 && client.getAddress().length() > 0 && client.getPostCode().length() > 0 && client.getCity().length() > 0) {
+			// On utilise redirect pour appeler une autre fonction de mapping
+			return "redirect:/clientList";
+		}
+		
+		// Si au moins un champ est vide, on affiche un message d'erreur (celui de application.properties)
+		model.addAttribute("errorMessage", errorMessage);
+		// Et on reste sur le formulaire
+		return "clientForm";
+	}
+	
+	// Suppression d'un client
+	@RequestMapping(value = {"/deleteClient/{id}"}, method = RequestMethod.GET)
+	public String removeClient(@PathVariable(value = "id") int id) {
+		// On appelle la fonction de suppression
+		services.removeClientById(id);
+		// On utilise redirect pour appeler une autre fonction de mapping
+		return "redirect:/clientList";
+	}
 }

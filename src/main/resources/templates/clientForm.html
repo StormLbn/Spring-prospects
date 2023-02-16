@@ -6,7 +6,12 @@
             <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     </head>
     <body>
-        <form th:action = "@{/addClient}" th:object = "${clientForm}" method = "POST">
+        <form th:action = "@{/saveClient}" th:object = "${clientForm}" method = "POST">
+
+            <!-- Pour pouvoir modifier un client, il faut que l'ID soit présent dans le formulaire -->
+            <!-- On utilise un champ caché, qui n'est présent que si on a un client à modifier -->
+            <input th:if="*{id}" type="hidden" th:field="*{id}" />
+
             <label for="name">Nom du client :</label>
             <input type="text" th:field="*{name}" />
 
@@ -16,8 +21,8 @@
             <label for="address">Adresse :</label>
             <input type="text" th:field="*{address}"/>
 
-            <label for="postcode">Code postal :</label>
-            <input type="text" th:field="*{postcode}" />
+            <label for="postCode">Code postal :</label>
+            <input type="text" th:field="*{postCode}" />
 
             <label for="city">Ville :</label>
             <input type="text" th:field="*{city}" />

@@ -6,18 +6,23 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 
+// Permet de lier la classe à une table MySQL du même nom
 @Entity
 public class Client {
+	// Indique que ce paramètre est obligatoire car sert pour l'identification
 	@Id
+	// Permet de gérérer automatiquement l'ID (à coupler avec Auto_increment)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	// Nommer les paramètres en camelCase ; chaque majuscule sera transformée en underscore+minuscule lors des requêtes par JpaRepository
 	private String name;
 	private String siret;
 	private String address;
-	private String postcode;
+	private String postCode;	// Deviendra post_code en BDD
 	private String city;
 	
+	// L'interface JpaRepository a besoin d'un constructeur vide pour fonctionner
 	public Client() {}
 	
 	public Client(int id, String name, String siret, String address, String postcode, String city) {
@@ -25,28 +30,17 @@ public class Client {
 		this.name = name;
 		this.siret = siret;
 		this.address = address;
-		this.postcode = postcode;
+		this.postCode = postcode;
 		this.city = city;
 	}
-	
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (obj == this) {
-//			return true;
-//		}
-//		if (!(obj instanceof Client)) {
-//			return false;
-//		}
-//		Client client = (Client) obj;
-//		return Integer.compare(this.id, client.id) == 0;
-//	}
 
 	@Override
 	public String toString() {
-		return "Client n°" + id + " : " + name + ", N° Siret : " + siret + ", Adresse : " + address + ", " + postcode
+		return "Client n°" + id + " : " + name + ", N° Siret : " + siret + ", Adresse : " + address + ", " + postCode
 				+ " " + city;
 	}
 
+	// Attention de respecter la même casse pour les getters/setters que pour les paramètres !
 	public int getId() {
 		return id;
 	}
@@ -79,12 +73,12 @@ public class Client {
 		this.address = address;
 	}
 
-	public String getPostcode() {
-		return postcode;
+	public String getPostCode() {
+		return postCode;
 	}
 
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
+	public void setPostCode(String postcode) {
+		this.postCode = postcode;
 	}
 
 	public String getCity() {
