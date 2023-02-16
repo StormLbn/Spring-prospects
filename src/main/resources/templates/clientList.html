@@ -4,28 +4,54 @@
 		<meta charset="UTF-8" />
 		<title>Prospects - Liste des clients</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+		<link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
 	</head>
 	<body>
-		<h2>Liste des clients :</h2>
-		<div>
-			<table>
-				<tr>
-					<th>Nom du client</th>
-					<th>N° Siret</th>
-					<th>Adresse</th>
-					<th>Code postal</th>
-					<th>Ville</th>
-				</tr>
-				<tr th:each = "client : ${clients}">
-					<td th:utext = "${client.name}"></td>
-					<td th:utext = "${client.siret}"></td>
-					<td th:utext = "${client.address}"></td>
-					<td th:utext = "${client.postCode}"></td>
-					<td th:utext = "${client.city}"></td>
-					<td><a th:href="@{/updateClient/{id}(id=${client.id})}">Modifier</a></td>
-					<td><a th:href="@{/deleteClient/{id}(id=${client.id})}">Supprimer</a></td>
-				</tr>
-			</table>
-		</div>
+		<header>
+			<h1>
+				Prospects : gérez vos clients
+			</h1>
+			<nav>
+				<a th:href="@{/clientList}">Liste des clients</a>
+				<a th:href="@{/addClient}">Ajouter un client</a>
+			</nav>
+		</header>
+
+		<main class="list">
+			<h2>Liste des clients :</h2>
+			<div>
+				<table th:if="*{clients}">
+					<tr>
+						<th>Nom du client</th>
+						<th>N° Siret</th>
+						<th>Adresse</th>
+						<th>Code postal</th>
+						<th>Ville</th>
+						<th>Actions</th>
+					</tr>
+					<tr th:each = "client : ${clients}">
+						<td th:utext = "${client.name}"></td>
+						<td th:utext = "${client.siret}"></td>
+						<td th:utext = "${client.address}"></td>
+						<td th:utext = "${client.postCode}"></td>
+						<td th:utext = "${client.city}"></td>
+						<td>
+							<a th:href="@{/updateClient/{id}(id=${client.id})}" class="btn btn-edit">Modifier</a>
+							<a th:href="@{/deleteClient/{id}(id=${client.id})}" class="btn btn-delete">Supprimer</a>
+						</td>
+					</tr>
+				</table>
+				<!-- Ne fonctionne pas : pourquoi ? -->
+				<p th:unless="*{clients}">
+					Vous n'avez pas encore de client enregistré.
+				</p>
+			</div>
+		</main>
+
+		<footer>
+			<p>
+				Copyright : SiderealStorm 2023
+			</p>
+		</footer>
 	</body>
 </html>

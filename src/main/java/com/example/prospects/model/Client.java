@@ -9,7 +9,7 @@ import jakarta.persistence.SequenceGenerator;
 // Permet de lier la classe à une table MySQL du même nom
 @Entity
 public class Client {
-	// Indique que ce paramètre est obligatoire car sert pour l'identification
+	// Indique que ce paramètre sert de clé priaire et est obligatoire
 	@Id
 	// Permet de gérérer automatiquement l'ID (à coupler avec Auto_increment)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

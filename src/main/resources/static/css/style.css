@@ -1,0 +1,69 @@
+body {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+
+    background-color: beige;
+}
+
+header, footer {
+    background-color: sandybrown;
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav a:hover {
+    border-bottom: 2px solid maroon;
+}
+
+main {
+    margin: auto;
+}
+
+main h2 {
+    color:saddlebrown;
+}
+
+.btn {
+    padding: 3px 5px;
+    border: 1px solid black;
+    border-radius: 3px;
+    color: white;
+}
+
+.btn-edit {
+    background-color:darkgreen;
+}
+
+.btn-delete {
+    background-color: red;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+table, td, th {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 7px;
+}
+
+.form form {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 5px;
+}

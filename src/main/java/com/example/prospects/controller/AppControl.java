@@ -72,6 +72,7 @@ public class AppControl {
 		
 		// On vérifie que tous les champs ont été remplis
 		if (client.getName().length() > 0 && client.getSiret().length() > 0 && client.getAddress().length() > 0 && client.getPostCode().length() > 0 && client.getCity().length() > 0) {
+			services.saveClient(client);
 			// On utilise redirect pour appeler une autre fonction de mapping
 			return "redirect:/clientList";
 		}

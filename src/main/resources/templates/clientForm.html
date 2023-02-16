@@ -1,35 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-            <meta charset="UTF-8" />
-            <title>Prospects - Ajouter un client</title>
-            <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+        <meta charset="UTF-8" />
+        <!-- Titre différent en fonction de l'action -->
+        <title th:if="*{id}">Prospects - Modifier un client</title>
+        <title th:unless="*{id}">Prospects - Ajouter un client</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+        <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
     </head>
     <body>
-        <form th:action = "@{/saveClient}" th:object = "${clientForm}" method = "POST">
+		<header>
+			<h1>
+				Prospects : gérez vos clients
+			</h1>
+			<nav>
+                <div>
+                    <a th:href="@{/clientList}">Liste des clients</a>
+                </div>
+                <div>
+                    <a th:href="@{/addClient}">Ajouter un client</a>
+                </div>
+			</nav>
+		</header>
 
-            <!-- Pour pouvoir modifier un client, il faut que l'ID soit présent dans le formulaire -->
-            <!-- On utilise un champ caché, qui n'est présent que si on a un client à modifier -->
-            <input th:if="*{id}" type="hidden" th:field="*{id}" />
+        <main class="form">
+            <h2 th:if="*{id}">Modifier un client</h2>
+            <h2 th:unless="*{id}">Ajouter un client</h2>
+            <form th:action = "@{/saveClient}" th:object = "${clientForm}" method = "POST">
+    
+                <!-- Pour pouvoir modifier un client, il faut que l'ID soit présent dans le formulaire -->
+                <!-- On utilise un champ caché, qui n'est présent que si on a un client à modifier -->
+                <input th:if="*{id}" type="hidden" th:field="*{id}" />
+                <div>
+                    <label for="name">Nom du client :</label>
+                    <input type="text" th:field="*{name}" />
+                </div>
+    
+                <div>
+                    <label for="siret">Siret :</label>
+                    <input type="text" th:field="*{siret}"/>
+                </div>
+    
+                <div>
+                    <label for="address">Adresse :</label>
+                    <input type="text" th:field="*{address}"/>
+                </div>
+    
+                <div>
+                    <label for="postCode">Code postal :</label>
+                    <input type="text" th:field="*{postCode}" />
+                </div>
+    
+                <div>
+                    <label for="city">Ville :</label>
+                    <input type="text" th:field="*{city}" />
+                </div>
+    
+                <div>
+                    <input type="submit" value="Enregistrer" />
+                </div>
+            </form>
 
-            <label for="name">Nom du client :</label>
-            <input type="text" th:field="*{name}" />
+            <!-- Affichage du message d'erreur si un champ n'est pas rempli -->
+            <div th:if="${errorMessage}" th:utext="${errorMessage}" style="color:red;font-style:italic;">
+            </div>
+        </main>
 
-            <label for="siret">Siret :</label>
-            <input type="text" th:field="*{siret}"/>
-
-            <label for="address">Adresse :</label>
-            <input type="text" th:field="*{address}"/>
-
-            <label for="postCode">Code postal :</label>
-            <input type="text" th:field="*{postCode}" />
-
-            <label for="city">Ville :</label>
-            <input type="text" th:field="*{city}" />
-
-            <input type="submit" value="Ajouter client" />
-        </form>
-        <div th:if="${errorMessage}" th:utext="${errorMessage}" style="color:red;font-style:italic;">
-        </div>
+		<footer>
+			<p>
+				Copyright : SiderealStorm 2023
+			</p>
+		</footer>
     </body>
 </html>

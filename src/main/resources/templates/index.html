@@ -4,9 +4,29 @@
 		<meta charset="UTF-8" />
 		<title>Prospects</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+		<link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
 	</head>
 	<body>
-		<a th:href="@{/clientList}">Liste des clients</a>
-		<a th:href="@{/addClient}">Ajouter un client</a>
+		<header>
+			<h1>
+				Prospects : gérez vos clients
+			</h1>
+			<nav>
+				<a th:href="@{/clientList}">Liste des clients</a>
+				<a th:href="@{/addClient}">Ajouter un client</a>
+			</nav>
+		</header>
+
+		<main class="index">
+			<h2>
+				Bienvenue sur Prospects !
+			</h2>
+		</main>
+
+		<footer>
+			<p>
+				Copyright : SiderealStorm 2023
+			</p>
+		</footer>
 	</body>
 </html>
