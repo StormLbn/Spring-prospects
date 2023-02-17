@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Prospects</title>
-		<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
-		<link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
+		<link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
+		<!-- <link rel="stylesheet" type="text/css" href="../static/css/style.css"/> -->
 	</head>
 	<body>
 		<header>
@@ -12,15 +12,49 @@
 				Prospects : gérez vos clients
 			</h1>
 			<nav>
-				<a th:href="@{/clientList}">Liste des clients</a>
-				<a th:href="@{/addClient}">Ajouter un client</a>
+				<ul>
+					<!-- <li th:if="${param.login}">
+						<a th:href="@{/logout}">Déconnexion</a>
+					</li> -->
+					<li>
+						<a th:href="@{/clientList}">Liste des clients</a>
+					</li>
+					<li>
+						<a th:href="@{/addClient}">Ajouter un client</a>
+					</li>
+				</ul>
 			</nav>
 		</header>
 
 		<main class="index">
-			<h2>
-				Bienvenue sur Prospects !
-			</h2>
+			<div>
+				<h2>
+					Bienvenue sur Prospects !
+				</h2>
+				<form th:action="@{/login}" method="post">
+					<h3>Veuillez vous connecter :</h3>
+					<div>
+						<label for="*{user.username}">Nom d'utilisateur ou e-mail :</label>
+						<input type="text" th:field="*{user.username}" />
+					</div>
+					<div>
+						<label for="*{user.password}">Mot de passe :</label>
+						<input type="password" th:field="*{user.password}" />
+					</div>
+					<div>
+						<input type="submit" value="Connexion">
+					</div>
+					<p th:if="${param.error}">
+						Login ou mot de passe invalide !
+					</p>
+				</form>
+			</div>
+			<div th:if="${param.login}">
+				<h2 th:value="Bienvenue sur Prospects, ${user.username} !"></h2>
+				<p th:if="${param.login}">
+					<a th:href="@{/logout}">Déconnexion</a>
+				</p>
+			</div>
 		</main>
 
 		<footer>

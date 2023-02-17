@@ -12,8 +12,17 @@
 				Prospects : gérez vos clients
 			</h1>
 			<nav>
-				<a th:href="@{/clientList}">Liste des clients</a>
-				<a th:href="@{/addClient}">Ajouter un client</a>
+				<ul>
+					<li>
+						<a th:href="@{/logout}">Déconnexion</a>
+					</li>
+					<li>
+						<a th:href="@{/clientList}">Liste des clients</a>
+					</li>
+					<li>
+						<a th:href="@{/addClient}">Ajouter un client</a>
+					</li>
+				</ul>
 			</nav>
 		</header>
 

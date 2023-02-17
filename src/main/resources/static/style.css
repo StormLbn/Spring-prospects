@@ -15,11 +15,15 @@ header, footer {
     text-align: center;
 }
 
-nav {
+nav ul {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
     gap: 20px;
+}
+
+nav li {
+    list-style-type: none;
 }
 
 nav a:hover {

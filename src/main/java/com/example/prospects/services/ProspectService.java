@@ -11,7 +11,7 @@ import com.example.prospects.repository.ClientsRepo;
 
 //Déclaration de la classe comme étant un bean
 @Component
-public class Services {
+public class ProspectService {
 	// Injection des dépendances via les beans
 	@Autowired
 	private ClientsRepo clientsRepo;
